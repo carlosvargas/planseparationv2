@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Separation</title>
+    <style>
+body {
+    background: #dcd6c8;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow-y: scroll;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#content, #new-message {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+#top-message {
+    font-size: 3vw;
+    margin-top: 20px;
+}
+
+#plus-sign {
+    font-size: 15vw;
+    margin: 20px 0;
+}
+
+#image-space {
+    width: 80%;
+    max-width: 500px;
+    border: 2px dashed #ccc;
+    margin-bottom: 20px;
+}
+
+#image-space img {
+    width: 100%;
+}
+
+#toggle-button {
+    background: #5d5d5e;
+    color: #dcd6c8 !important;
+    font-size: 20px;
+    padding: 20px;
+    border: 1px solid #dcd6c8;
+    cursor: pointer;
+    width: 250px;
+    margin-top: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#toggle-button:hover {
+    background: #000 !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#new-message {
+    font-size: 18px;
+    display: none;
+    line-height: 1.5;
+    padding: 20px;
+}
+
+@media (max-width: 600px) {
+    #new-message {
+        font-size: 16px;
+    }
+
+#top-message {
+    font-size: 5vw;
+    margin-top: 20px;
+}
+}
+
+
+        .bounce-up {
+            animation: bounceUp 0.5s ease-in-out forwards;
+        }
+        @keyframes bounceUp {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-50px); opacity: 0.5; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+        .char {
+            opacity: 0;
+            display: inline-block;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div id="top-message">
+            <a href="http://www.planseparation.com" style="text-decoration: none;">
+                <span style="color: #4a4a4a;">Plan</span><span style="color: #007bff;">Separation</span><span style="color: #4a4a4a;">.com</span>
+            </a>
+        </div>
+        <div id="plus-sign">+</div>
+        <div id="image-space"><img src="./addition.png"/></div>
+        <button id="toggle-button">Pivot! Pivot!</button>
+    </div>
+    <div id="new-message">
+        <h2>Plan Separation V2, by Taylor Swift AI</h2>
+    </div>
+
+    <script>
+        const content = document.getElementById('content');
+        const toggleButton = document.getElementById('toggle-button');
+        const newMessage = document.getElementById('new-message');
+
+        const intro = `We were building Plan Separation
+When unexpected visitors arrived.`;
+
+        const verse1 = `We were building Plan Separation,
+A blueprint for success.
+But then a Penguin showed up,
+And caused a bit of stress.`;
+
+        const chorus = `Plan Separation, Plan Separation,
+We had to pivot, we had to pivot.
+Plan Separation, Plan Separation,
+But we got there in the end.`;
+
+        const verse2 = `The "Letter H" came crashing down,
+And we had to rethink our plan,
+But we were quick on our feet,
+And we found a way to land.`;
+
+        const bridge = `We came back stronger than before,
+Plan Separation V2,
+Was even better than before.`;
+
+        const outro = `So don't give up on your dreams,
+Even when things get tough,
+Just keep on pivoting,
+And you'll get there in the end.`;
+
+        const songSections = [
+            intro,
+            verse1,
+            verse2,
+            chorus,
+            bridge,
+            chorus,
+            outro
+        ];
+
+        toggleButton.addEventListener('click', () => {
+            content.classList.add('bounce-up');
+            setTimeout(() => {
+                content.style.display = 'none';
+                newMessage.style.display = 'block';
+                showMessage();
+            }, 500);
+        });
+
+        function showMessage() {
+            let totalDelay = 0;
+            songSections.forEach((section, sectionIndex) => {
+                const lines = section.split('\n');
+                lines.forEach((line, lineIndex) => {
+                    const words = line.split(' ');
+                    words.forEach((word, wordIndex) => {
+                        const chars = word.split('');
+                        chars.forEach((char, charIndex) => {
+                            const span = document.createElement('span');
+                            span.textContent = char;
+                            span.classList.add('char');
+                            newMessage.appendChild(span);
+
+                            setTimeout(() => {
+                                span.style.opacity = '1';
+                                span.style.transform = 'translateY(0)';
+                            }, totalDelay);
+
+                            totalDelay += 20;
+                        });
+
+                        if (wordIndex < words.length - 1) {
+                            const nbspSpan = document.createElement('span');
+                            nbspSpan.innerHTML = '&nbsp;';
+                            nbspSpan.classList.add('char');
+                            newMessage.appendChild(nbspSpan);
+                            setTimeout(() => {
+                                nbspSpan.style.opacity = '1';
+                                nbspSpan.style.transform = 'translateY(0)';
+                            }, totalDelay);
+                            totalDelay += 20;
+                        }
+                    });
+
+                    if (lineIndex < lines.length - 1) {
+                        const lineBreak = document.createElement('br');
+                        newMessage.appendChild(lineBreak);
+                        totalDelay += 100; // Add a small pause between lines
+                    }
+                });
+
+                if (sectionIndex < songSections.length - 1) {
+                    const lineBreak1 = document.createElement('br');
+                    const lineBreak2 = document.createElement('br');
+                    newMessage.appendChild(lineBreak1);
+                    newMessage.appendChild(lineBreak2);
+                    totalDelay += 500; // Add a pause between sections
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
